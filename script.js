@@ -1,7 +1,3 @@
-
-
-
-
 class Pokemon {
 
     // #region attributes
@@ -106,11 +102,10 @@ function renderCards() {
                 </div>
         `;
         renderTypes(i);
+        typeBackground();
 
     }
 }
-
-// TODO: next step -- types rendern
 
 function renderTypes(index) {
 
@@ -119,11 +114,71 @@ function renderTypes(index) {
         const typeRef = document.getElementById('types' + index);
 
         typeRef.innerHTML +=  /*html*/`
-                <span>${pokeArray[index].types[j]}</span>
+                <span class="type">${pokeArray[index].types[j]}</span>
             `
+            
     }
 }
 
+// funktion, um den hintergrund der type-container einzustellen
+function typeBackground(){
+
+    const typeDesc = document.getElementsByClassName('type');
+    
+    for(let i = 0; i < typeDesc.length; i++){
+        
+            switch(typeDesc[i].innerHTML){
+        case "fire":
+            typeDesc[i].classList.add("fire")
+            break
+        case "water":
+            typeDesc[i].classList.add("water")
+            break
+        case "grass":
+            typeDesc[i].classList.add("grass")
+            break
+        case "bug":
+            typeDesc[i].classList.add("bug")
+            break
+        case "dragon":
+            typeDesc[i].classList.add("dragon")
+            break
+        case "electric":
+            typeDesc[i].classList.add("electric")
+            break
+        case "fighting":
+            typeDesc[i].classList.add("fighting")
+            break
+        case "flying":
+            typeDesc[i].classList.add("flying")
+            break
+        case "ghost":
+            typeDesc[i].classList.add("ghost")
+            break
+        case "ground":
+            typeDesc[i].classList.add("ground")
+            break
+        case "ice":
+            typeDesc[i].classList.add("ice")
+            break
+        case "normal":
+            typeDesc[i].classList.add("normal")
+            break
+        case "poison":
+            typeDesc[i].classList.add("poison")
+            break
+        case "psychic":
+            typeDesc[i].classList.add("psychic")
+        case "rock":
+            typeDesc[i].classList.add("rock")
+
+    }
+    }
+   
+
+}
+
 getPokemonFromApi();
+
 
 console.log(pokeArray);
