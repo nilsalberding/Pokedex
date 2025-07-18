@@ -73,7 +73,7 @@ const pokeArray = [];
 
 async function getPokemonFromApi() {
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 15; i++) {
 
         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
         const pokeJson = await pokeResponse.json();
@@ -159,6 +159,9 @@ function typeBackground() {
                 typeDesc[i].classList.add("psychic")
             case "rock":
                 typeDesc[i].classList.add("rock")
+                break
+            case "fairy":
+                typeDesc[i].classList.add("fairy")
         }
     }
 }
