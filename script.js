@@ -1,38 +1,6 @@
-// async function renderCards() {
-
-//     const cardSectionRef = document.getElementById('cards');
-
-//     for (let i = 1; i < 10; i++) {
-
-//         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
-//         const pokeJson = await pokeResponse.json();
-
-//         console.log(pokeJson);
 
 
-
-//         cardSectionRef.innerHTML += /*html*/`                
-//                 <div class="card">
-//                     <img src="${pokeJson.sprites.front_default}" alt="">
-//                     <div class="card-details">
-//                         <span>#${i}</span>
-//                         <span>${pokeJson.name}</span>
-//                         <div id='types${i}'>
-//                             <span>Fire</span>
-//                             <span>Flying</span>
-//                         </div>
-
-//                     </div>
-//                 </div>
-//         `
-
-//     }
-
-// }
-
-// renderCards();
-
-// // TODO: next step -- types rendern
+// TODO: next step -- types rendern
 
 // async function renderTypes() {
 
@@ -49,10 +17,6 @@
 
 //     }
 // }
-// renderTypes()
-// const pokeArray = [];;
-
-
 
 class Pokemon {
 
@@ -122,8 +86,6 @@ class Pokemon {
         const word = pName;
         this.name = word.charAt(0).toUpperCase() + word.slice(1);        
     }
-
-    
     // #endregion
 }
 
@@ -138,9 +100,29 @@ async function getPokemonFromApi() {
 
         pokeArray.push(new Pokemon({pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson.sprites.front_default, pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight}));
     }
+    renderCards();
+}
 
-    // console.log(new Pokemon({pAbilities: pokeArrayAll[0].abilities, pName: pokeArrayAll[0].name, pHeight: pokeArrayAll[0].height, pIndex: 0, pSpriteSrc: pokeArrayAll[0].sprites.front_default, pStats: pokeArrayAll[0].stats, pTypes: pokeArrayAll[0].types, pWeight: pokeArrayAll[0].weight}));
+function renderCards() {
 
+    const cardSectionRef = document.getElementById('cards');
+
+    for (let i = 1; i < pokeArray.length; i++) {
+
+        cardSectionRef.innerHTML += /*html*/`                
+                <div class="card">
+                    <img src="${pokeArray[i].spriteSrc}" alt="">
+                    <div class="card-details">
+                        <span>#${i}</span>
+                        <span>${pokeArray[i].name}</span>
+                        <div id='types${i}'>
+                            <span>Fire</span>
+                            <span>Flying</span>
+                        </div>
+                    </div>
+                </div>
+        `
+    }
 }
 
 getPokemonFromApi();
