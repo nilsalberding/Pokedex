@@ -1,22 +1,6 @@
 
 
-// TODO: next step -- types rendern
 
-// async function renderTypes() {
-
-//     for (let j = 0; j < pokeJson.types.length; j++) {
-
-//         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + j);
-//         const pokeJson = await pokeResponse.json();
-
-//         const typeRef = document.getElementById('type' + j);
-
-//         typeRef.innerHTML +=  /*html*/`
-//                 <span>${pokeJson.types[j].type.name}</span>
-//             `
-
-//     }
-// }
 
 class Pokemon {
 
@@ -107,21 +91,36 @@ function renderCards() {
 
     const cardSectionRef = document.getElementById('cards');
 
-    for (let i = 1; i < pokeArray.length; i++) {
+    for (let i = 0; i < pokeArray.length; i++) {
 
         cardSectionRef.innerHTML += /*html*/`                
                 <div class="card">
                     <img src="${pokeArray[i].spriteSrc}" alt="">
                     <div class="card-details">
-                        <span>#${i}</span>
+                        <span>#${pokeArray[i].id}</span>
                         <span>${pokeArray[i].name}</span>
                         <div id='types${i}'>
-                            <span>Fire</span>
-                            <span>Flying</span>
+
                         </div>
                     </div>
                 </div>
-        `
+        `;
+        renderTypes(i);
+
+    }
+}
+
+// TODO: next step -- types rendern
+
+function renderTypes(index) {
+
+    for (let j = 0; j < pokeArray[index].types.length; j++) {
+
+        const typeRef = document.getElementById('types' + index);
+
+        typeRef.innerHTML +=  /*html*/`
+                <span>${pokeArray[index].types[j]}</span>
+            `
     }
 }
 
