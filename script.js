@@ -18,7 +18,7 @@ class Pokemon {
     weight;
     height;
 
-// #endregion
+    // #endregion
 
     // constructor erstellen, in dem die methoden aufgerufen werden und die einfachen attributes erzeugt werden
     // benötigte parameter des constructors? 
@@ -62,9 +62,9 @@ class Pokemon {
         }
     }
 
-    getUpperName(pName){
+    getUpperName(pName) {
         const word = pName;
-        this.name = word.charAt(0).toUpperCase() + word.slice(1);        
+        this.name = word.charAt(0).toUpperCase() + word.slice(1);
     }
     // #endregion
 }
@@ -78,7 +78,7 @@ async function getPokemonFromApi() {
         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
         const pokeJson = await pokeResponse.json();
 
-        pokeArray.push(new Pokemon({pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson.sprites.front_default, pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight}));
+        pokeArray.push(new Pokemon({ pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson.sprites.front_default, pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight }));
     }
     renderCards();
 }
@@ -89,21 +89,10 @@ function renderCards() {
 
     for (let i = 0; i < pokeArray.length; i++) {
 
-        cardSectionRef.innerHTML += /*html*/`                
-                <div class="card">
-                    <img src="${pokeArray[i].spriteSrc}" alt="">
-                    <div class="card-details">
-                        <span>#${pokeArray[i].id}</span>
-                        <span>${pokeArray[i].name}</span>
-                        <div id='types${i}'>
+        cardSectionRef.innerHTML += getCard({spriteSrc: pokeArray[i].spriteSrc, id: pokeArray[i].id, name: pokeArray[i].name, index: i});
 
-                        </div>
-                    </div>
-                </div>
-        `;
         renderTypes(i);
         typeBackground();
-
     }
 }
 
@@ -116,66 +105,62 @@ function renderTypes(index) {
         typeRef.innerHTML +=  /*html*/`
                 <span class="type">${pokeArray[index].types[j]}</span>
             `
-            
     }
 }
 
 // funktion, um den hintergrund der type-container einzustellen
-function typeBackground(){
+function typeBackground() {
 
     const typeDesc = document.getElementsByClassName('type');
-    
-    for(let i = 0; i < typeDesc.length; i++){
-        
-            switch(typeDesc[i].innerHTML){
-        case "fire":
-            typeDesc[i].classList.add("fire")
-            break
-        case "water":
-            typeDesc[i].classList.add("water")
-            break
-        case "grass":
-            typeDesc[i].classList.add("grass")
-            break
-        case "bug":
-            typeDesc[i].classList.add("bug")
-            break
-        case "dragon":
-            typeDesc[i].classList.add("dragon")
-            break
-        case "electric":
-            typeDesc[i].classList.add("electric")
-            break
-        case "fighting":
-            typeDesc[i].classList.add("fighting")
-            break
-        case "flying":
-            typeDesc[i].classList.add("flying")
-            break
-        case "ghost":
-            typeDesc[i].classList.add("ghost")
-            break
-        case "ground":
-            typeDesc[i].classList.add("ground")
-            break
-        case "ice":
-            typeDesc[i].classList.add("ice")
-            break
-        case "normal":
-            typeDesc[i].classList.add("normal")
-            break
-        case "poison":
-            typeDesc[i].classList.add("poison")
-            break
-        case "psychic":
-            typeDesc[i].classList.add("psychic")
-        case "rock":
-            typeDesc[i].classList.add("rock")
 
-    }
-    }
-   
+    for (let i = 0; i < typeDesc.length; i++) {
 
+        switch (typeDesc[i].innerHTML) {
+            case "fire":
+                typeDesc[i].classList.add("fire")
+                break
+            case "water":
+                typeDesc[i].classList.add("water")
+                break
+            case "grass":
+                typeDesc[i].classList.add("grass")
+                break
+            case "bug":
+                typeDesc[i].classList.add("bug")
+                break
+            case "dragon":
+                typeDesc[i].classList.add("dragon")
+                break
+            case "electric":
+                typeDesc[i].classList.add("electric")
+                break
+            case "fighting":
+                typeDesc[i].classList.add("fighting")
+                break
+            case "flying":
+                typeDesc[i].classList.add("flying")
+                break
+            case "ghost":
+                typeDesc[i].classList.add("ghost")
+                break
+            case "ground":
+                typeDesc[i].classList.add("ground")
+                break
+            case "ice":
+                typeDesc[i].classList.add("ice")
+                break
+            case "normal":
+                typeDesc[i].classList.add("normal")
+                break
+            case "poison":
+                typeDesc[i].classList.add("poison")
+                break
+            case "psychic":
+                typeDesc[i].classList.add("psychic")
+            case "rock":
+                typeDesc[i].classList.add("rock")
+        }
+    }
 }
 
 getPokemonFromApi();
