@@ -4,6 +4,7 @@ class Pokemon {
 
     name;
     spriteSrc;
+    spriteSrcScnd;
     id;
     types = [];
     stats = {
@@ -17,14 +18,17 @@ class Pokemon {
     abilities = [];
     weight;
     height;
+    arrayIndex;
 
     // #endregion
 
     // constructor erstellen, in dem die methoden aufgerufen werden und die einfachen attributes erzeugt werden
     // benötigte parameter des constructors? 
-    constructor({ pName, pSpriteSrc, pIndex, pTypes, pStats, pAbilities, pWeight, pHeight }) {
+    constructor({ pName, pSpriteSrc, pSpriteSrcScnd, pIndex, pTypes, pStats, pAbilities, pWeight, pHeight }) {
 
         this.spriteSrc = pSpriteSrc;
+        this.spriteSrcScnd = pSpriteSrcScnd;
+
         this.id = pIndex;
         this.weight = pWeight;
         this.height = pHeight;
@@ -32,7 +36,8 @@ class Pokemon {
         this.getAbilities(pAbilities);
         this.getStats(pStats);
         this.getTypes(pTypes);
-        this.getUpperName(pName)
+        this.getUpperName(pName);
+        this.getArrayIndex(pIndex);
     }
 
     // methoden erstellen, um an werte für stats sowie types zu kommen
@@ -66,6 +71,10 @@ class Pokemon {
         const word = pName;
         this.name = word.charAt(0).toUpperCase() + word.slice(1);
     }
+
+    getArrayIndex(pIndex){
+        this.arrayIndex = pIndex - 1;
+    }
     // #endregion
 }
 
@@ -74,14 +83,14 @@ const pokeArray = [];
 
 async function getPokemonFromApi() {
 
-    const arrayLength = pokeArray.length + 1
+    const arrayLength = pokeArray.length + 1 // angelegt für den loadmore button
 
-    for (let i = arrayLength; i <= arrayLength + 14; i++) {        
+    for (let i = arrayLength; i <= arrayLength + 24; i++) {        // 
 
         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
         const pokeJson = await pokeResponse.json();
 
-        pokeArray.push(new Pokemon({ pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson.sprites.front_default, pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight }));
+        pokeArray.push(new Pokemon({ pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson['sprites']['front_default'], pSpriteSrcScnd: pokeJson['sprites']['other']['official-artwork']['front_default'], pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight }));
     }
     renderCards();
 }
@@ -120,6 +129,12 @@ console.log(pokeArray);
 
 // overlay-ansicht erstellen
 
+// function showCardview(index){
+
+//     const CardViewRef = document.getElementById('overlay')
+
+//     CardViewRef.innerHTML = getCardView({typeOne: pokeArray[index].types[0]})
+// }
 
 
 // reiter für verschiedene descriptions 
