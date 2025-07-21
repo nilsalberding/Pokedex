@@ -41,16 +41,16 @@ function getCardView({typeOne, name, id, spriteSrc, index, height, weight, abili
                     <table>
                         <tbody>
                             <tr>
-                                <td>Height</td>
+                                <td>Height:</td>
                                 <td>${height}</td>
                             </tr>
                             <tr>
-                                <td>Weight</td>
+                                <td>Weight:</td>
                                 <td>${weight} kg</td>
                             </tr>
                             <tr>
-                                <td>Abilities</td>
-                                <td>${abilitieOne}, ${abilitieTwo}</td>
+                                <td>Abilities:</td>
+                                <td>${abilitieOne} <br>${abilitieTwo}</td>
                             </tr>
                         </tbody>
                     </table>
