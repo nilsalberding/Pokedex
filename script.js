@@ -71,9 +71,12 @@ class Pokemon {
 
 const pokeArray = [];
 
+
 async function getPokemonFromApi() {
 
-    for (let i = 1; i <= 15; i++) {
+    const arrayLength = pokeArray.length + 1
+
+    for (let i = arrayLength; i <= arrayLength + 15; i++) {        
 
         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
         const pokeJson = await pokeResponse.json();
@@ -86,6 +89,7 @@ async function getPokemonFromApi() {
 function renderCards() {
 
     const cardSectionRef = document.getElementById('cards');
+    cardSectionRef.innerHTML = "";
 
     for (let i = 0; i < pokeArray.length; i++) {
 
@@ -170,3 +174,16 @@ getPokemonFromApi();
 
 
 console.log(pokeArray);
+
+
+
+// overlay-ansicht erstellen
+
+
+
+// reiter für verschiedene descriptions 
+
+// pfeile um zum nächsten pokemon zu kommen
+
+
+
