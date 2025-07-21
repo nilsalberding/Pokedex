@@ -31,7 +31,7 @@ class Pokemon {
 
         this.id = pIndex;
         this.weight = pWeight;
-        
+
 
         this.getAbilities(pAbilities);
         this.getStats(pStats);
@@ -73,11 +73,11 @@ class Pokemon {
         this.name = word.charAt(0).toUpperCase() + word.slice(1);
     }
 
-    getArrayIndex(pIndex){
+    getArrayIndex(pIndex) {
         this.arrayIndex = pIndex - 1;
     }
 
-    getHeight(pHeight){
+    getHeight(pHeight) {
         this.height = pHeight * 10 + ' cm'
     }
     // #endregion
@@ -107,7 +107,7 @@ function renderCards() {
 
     for (let i = 0; i < pokeArray.length; i++) {
 
-        cardSectionRef.innerHTML += getCard({spriteSrc: pokeArray[i].spriteSrc, id: pokeArray[i].id, name: pokeArray[i].name, index: i});
+        cardSectionRef.innerHTML += getCard({ spriteSrc: pokeArray[i].spriteSrc, id: pokeArray[i].id, name: pokeArray[i].name, index: i });
 
         renderTypes(i);
     }
@@ -134,12 +134,12 @@ console.log(pokeArray);
 
 // overlay-ansicht erstellen
 
-function showCardView(index){
+function showCardView(index) {
 
     const CardViewRef = document.getElementById('overlay');
     CardViewRef.classList.toggle('d-flex');
 
-    CardViewRef.innerHTML = getCardView({typeOne: pokeArray[index].types[0], name: pokeArray[index].name, id: pokeArray[index].id, spriteSrc: pokeArray[index].spriteSrcScnd, abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight});
+    CardViewRef.innerHTML = getCardView({ typeOne: pokeArray[index].types[0], name: pokeArray[index].name, id: pokeArray[index].id, spriteSrc: pokeArray[index].spriteSrcScnd, abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight });
 
     renderTypesCardView(index);
 }
@@ -150,14 +150,23 @@ function renderTypesCardView(index) {
 
         const typeRef = document.getElementById('cardview-type' + index);
 
-        typeRef.innerHTML +=  /*html*/`
-                <span class="type ${pokeArray[index].types[j]}">${pokeArray[index].types[j]}</span>
-            `
+        typeRef.innerHTML += getTypes(pokeArray[index].types[j]);
+
     }
 }
 
+function closeCardView() {
 
-// reiter für verschiedene descriptions 
+    const CardViewRef = document.getElementById('overlay');
+    CardViewRef.classList.toggle('d-flex');
+}
+
+function stopBubbling(event){
+    event.stopPropagation();
+}
+
+
+// reiter für verschiedene descriptions
 
 // pfeile um zum nächsten pokemon zu kommen
 

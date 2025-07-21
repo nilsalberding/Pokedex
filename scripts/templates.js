@@ -13,10 +13,15 @@ function getCard({spriteSrc, id, name, index}) {
         `;
 }
 
+function getTypes(type){
+
+    return `<span class="type ${type}">${type}</span>`
+}
+
 function getCardView({typeOne, name, id, spriteSrc, index, height, weight, abilitieOne, abilitieTwo}){
 
     return /*html*/`
-        <div class="cardview">
+        <div class="cardview" onclick="stopBubbling(event)">
             <div class="cardview-main">
                 <div class="cardview-main-header ${typeOne}">
                     <span>${name}</span>
@@ -55,3 +60,4 @@ function getCardView({typeOne, name, id, spriteSrc, index, height, weight, abili
     `
 
 }
+
