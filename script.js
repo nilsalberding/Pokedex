@@ -76,7 +76,7 @@ async function getPokemonFromApi() {
 
     const arrayLength = pokeArray.length + 1
 
-    for (let i = arrayLength; i <= arrayLength + 15; i++) {        
+    for (let i = arrayLength; i <= arrayLength + 14; i++) {        
 
         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
         const pokeJson = await pokeResponse.json();
@@ -96,7 +96,6 @@ function renderCards() {
         cardSectionRef.innerHTML += getCard({spriteSrc: pokeArray[i].spriteSrc, id: pokeArray[i].id, name: pokeArray[i].name, index: i});
 
         renderTypes(i);
-        typeBackground();
     }
 }
 
@@ -107,66 +106,8 @@ function renderTypes(index) {
         const typeRef = document.getElementById('types' + index);
 
         typeRef.innerHTML +=  /*html*/`
-                <span class="type">${pokeArray[index].types[j]}</span>
+                <span class="type ${pokeArray[index].types[j]}">${pokeArray[index].types[j]}</span>
             `
-    }
-}
-
-// funktion, um den hintergrund der type-container einzustellen
-function typeBackground() {
-
-    const typeDesc = document.getElementsByClassName('type');
-
-    for (let i = 0; i < typeDesc.length; i++) {
-
-        switch (typeDesc[i].innerHTML) {
-            case "fire":
-                typeDesc[i].classList.add("fire")
-                break
-            case "water":
-                typeDesc[i].classList.add("water")
-                break
-            case "grass":
-                typeDesc[i].classList.add("grass")
-                break
-            case "bug":
-                typeDesc[i].classList.add("bug")
-                break
-            case "dragon":
-                typeDesc[i].classList.add("dragon")
-                break
-            case "electric":
-                typeDesc[i].classList.add("electric")
-                break
-            case "fighting":
-                typeDesc[i].classList.add("fighting")
-                break
-            case "flying":
-                typeDesc[i].classList.add("flying")
-                break
-            case "ghost":
-                typeDesc[i].classList.add("ghost")
-                break
-            case "ground":
-                typeDesc[i].classList.add("ground")
-                break
-            case "ice":
-                typeDesc[i].classList.add("ice")
-                break
-            case "normal":
-                typeDesc[i].classList.add("normal")
-                break
-            case "poison":
-                typeDesc[i].classList.add("poison")
-                break
-            case "psychic":
-                typeDesc[i].classList.add("psychic")
-            case "rock":
-                typeDesc[i].classList.add("rock")
-                break
-            case "fairy":
-                typeDesc[i].classList.add("fairy")
-        }
     }
 }
 
@@ -184,6 +125,10 @@ console.log(pokeArray);
 // reiter für verschiedene descriptions 
 
 // pfeile um zum nächsten pokemon zu kommen
+
+// searchbar programmieren
+
+// load-overlay erstellen
 
 
 
