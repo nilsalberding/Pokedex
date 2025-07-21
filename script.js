@@ -31,13 +31,14 @@ class Pokemon {
 
         this.id = pIndex;
         this.weight = pWeight;
-        this.height = pHeight;
+        
 
         this.getAbilities(pAbilities);
         this.getStats(pStats);
         this.getTypes(pTypes);
         this.getUpperName(pName);
         this.getArrayIndex(pIndex);
+        this.getHeight(pHeight);
     }
 
     // methoden erstellen, um an werte für stats sowie types zu kommen
@@ -74,6 +75,10 @@ class Pokemon {
 
     getArrayIndex(pIndex){
         this.arrayIndex = pIndex - 1;
+    }
+
+    getHeight(pHeight){
+        this.height = pHeight * 10 + ' cm'
     }
     // #endregion
 }
@@ -129,12 +134,27 @@ console.log(pokeArray);
 
 // overlay-ansicht erstellen
 
-// function showCardview(index){
+function showCardView(index){
 
-//     const CardViewRef = document.getElementById('overlay')
+    const CardViewRef = document.getElementById('overlay');
+    CardViewRef.classList.toggle('d-flex');
 
-//     CardViewRef.innerHTML = getCardView({typeOne: pokeArray[index].types[0]})
-// }
+    CardViewRef.innerHTML = getCardView({typeOne: pokeArray[index].types[0], name: pokeArray[index].name, id: pokeArray[index].id, spriteSrc: pokeArray[index].spriteSrcScnd, abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight});
+
+    renderTypesCardView(index);
+}
+
+function renderTypesCardView(index) {
+
+    for (let j = 0; j < pokeArray[index].types.length; j++) {
+
+        const typeRef = document.getElementById('cardview-type' + index);
+
+        typeRef.innerHTML +=  /*html*/`
+                <span class="type ${pokeArray[index].types[j]}">${pokeArray[index].types[j]}</span>
+            `
+    }
+}
 
 
 // reiter für verschiedene descriptions 

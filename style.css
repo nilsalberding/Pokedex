@@ -82,11 +82,7 @@ main {
                 align-items: center;
                 justify-content: space-around;
 
-                .type {
-                    color: white;
-                    padding: 8px;
-                    border-radius: 8px;
-                }
+
             }
         }
     }
@@ -97,7 +93,7 @@ main {
     width: 100%;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.229);
-    display: flex;
+
     justify-content: center;
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;

@@ -1,7 +1,7 @@
 function getCard({spriteSrc, id, name, index}) {
 
     return /*html*/`                
-                <div class="card">
+                <div class="card"  onclick="showCardView(${index})">
                     <img src="${spriteSrc}" alt="">
                     <div class="card-details">
                         <span># ${id}</span>
