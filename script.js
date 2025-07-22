@@ -22,16 +22,12 @@ class Pokemon {
 
     // #endregion
 
-    // constructor erstellen, in dem die methoden aufgerufen werden und die einfachen attributes erzeugt werden
-    // benötigte parameter des constructors? 
     constructor({ pName, pSpriteSrc, pSpriteSrcScnd, pIndex, pTypes, pStats, pAbilities, pWeight, pHeight }) {
 
         this.spriteSrc = pSpriteSrc;
         this.spriteSrcScnd = pSpriteSrcScnd;
-
         this.id = pIndex;
         this.weight = pWeight;
-
 
         this.getAbilities(pAbilities);
         this.getStats(pStats);
@@ -40,9 +36,6 @@ class Pokemon {
         this.getArrayIndex(pIndex);
         this.getHeight(pHeight);
     }
-
-    // methoden erstellen, um an werte für stats sowie types zu kommen
-    // Welche Parameter brauchen die methoden?
 
     // #region methods
 
@@ -85,7 +78,6 @@ class Pokemon {
 
 const pokeArray = [];
 
-
 async function getPokemonFromApi() {
 
     const arrayLength = pokeArray.length + 1;// angelegt für den loadmore button
@@ -93,12 +85,12 @@ async function getPokemonFromApi() {
     showLoadingSpinner();
 
     for (let i = arrayLength; i <= arrayLength + 24; i++) {        // 
-
+        if (i <= 151){
         const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
         const pokeJson = await pokeResponse.json();
 
         pokeArray.push(new Pokemon({ pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson['sprites']['front_default'], pSpriteSrcScnd: pokeJson['sprites']['other']['official-artwork']['front_default'], pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight }));
-    }
+    }}
     endLoadingSpinner();
     renderCardSection(pokeArray);
 }
@@ -249,8 +241,6 @@ function backward(index) {
 
 // searchbar programmieren
 
-// TODO: searchbar optimieren ( groß/kleinschreibun, erst ab 3 Buchstaben aktivieren)
-
 function search() {
 
     const inputRef = document.getElementById('search-bar');
@@ -263,9 +253,7 @@ function search() {
     } else {
         renderCardSection(pokeArray);
     }
-
 }
-
 
 // load-overlay erstellen
 
