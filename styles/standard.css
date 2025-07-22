@@ -40,8 +40,22 @@ body {
     border-radius: 8px;
 }
 
-.highlight{
-    background-color: #ffea9b !important; 
+.highlight {
+    background-color: #ffea9b !important;
+}
+
+button {
+    width: 10rem;
+    border: none;
+    background-color: #ffcb05;
+    padding: 0.4rem 0;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffea9b;
 }
 
 /* #region type-backgrounds */
