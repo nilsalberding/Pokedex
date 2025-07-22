@@ -17,6 +17,7 @@
 <body>
     <div id="overlay" class="d-none" onclick="closeCardView()">
     </div>
+    
     <header>
         <div class="content">
             <h1>Pokedex</h1>
@@ -24,9 +25,12 @@
     </header>
 
     <main>
+        <div id="loading-spinner" class="d-none">
+            <span class="loader"></span>
+        </div>
         <div class="content">
             <form action="">
-                <input class="search-input" type="text" placeholder="Search Pokemon" id="search-bar">
+                <input class="search-input" type="text" placeholder="Search Pokemon" id="search-bar" onkeyup="search()">
                 <input class="search-button" type="button" onclick="search()">
             </form>
             <section id="cards">

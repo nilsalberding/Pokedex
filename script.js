@@ -88,7 +88,9 @@ const pokeArray = [];
 
 async function getPokemonFromApi() {
 
-    const arrayLength = pokeArray.length + 1 // angelegt für den loadmore button
+    const arrayLength = pokeArray.length + 1;// angelegt für den loadmore button
+
+    showLoadingSpinner();
 
     for (let i = arrayLength; i <= arrayLength + 24; i++) {        // 
 
@@ -97,33 +99,30 @@ async function getPokemonFromApi() {
 
         pokeArray.push(new Pokemon({ pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson['sprites']['front_default'], pSpriteSrcScnd: pokeJson['sprites']['other']['official-artwork']['front_default'], pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight }));
     }
-    renderCards();
+    endLoadingSpinner();
+    renderCardSection(pokeArray);
 }
 
-
-
-function renderCards() {
+function renderCardSection(array) {
 
     const cardSectionRef = document.getElementById('cards');
     cardSectionRef.innerHTML = "";
 
-    for (let i = 0; i < pokeArray.length; i++) {
+    for (let i = 0; i < array.length; i++) {
 
-        cardSectionRef.innerHTML += getCard({ spriteSrc: pokeArray[i].spriteSrc, id: pokeArray[i].id, name: pokeArray[i].name, index: i });
+        cardSectionRef.innerHTML += getCard({ spriteSrc: array[i].spriteSrc, id: array[i].id, name: array[i].name, index: i });
 
-        renderTypes(i);
+        renderTypes(i, array);
     }
 }
 
-function renderTypes(index) {
+function renderTypes(index, array) {
 
-    for (let j = 0; j < pokeArray[index].types.length; j++) {
+    for (let j = 0; j < array[index].types.length; j++) {
 
         const typeRef = document.getElementById('types' + index);
 
-        typeRef.innerHTML +=  /*html*/`
-                <span class="type ${pokeArray[index].types[j]}">${pokeArray[index].types[j]}</span>
-            `
+        typeRef.innerHTML += getTypes(array[index].types[j]);
     }
 }
 
@@ -137,8 +136,18 @@ function showCardView(index) {
 
     const CardViewRef = document.getElementById('overlay');
     CardViewRef.classList.toggle('d-flex');
+    document.body.classList.add('no-scroll');
 
-    CardViewRef.innerHTML = getCardView({ typeOne: pokeArray[index].types[0], name: pokeArray[index].name, id: pokeArray[index].id, spriteSrc: pokeArray[index].spriteSrcScnd, abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight });
+    CardViewRef.innerHTML = getCardView({ 
+        typeOne: pokeArray[index].types[0], 
+        name: pokeArray[index].name, 
+        id: pokeArray[index].id, 
+        spriteSrc: pokeArray[index].spriteSrcScnd, 
+        abilitieOne: pokeArray[index].abilities[0], 
+        abilitieTwo: pokeArray[index].abilities[1], 
+        height: pokeArray[index].height, 
+        index: index, 
+        weight: pokeArray[index].weight });
 
     renderTypesCardView(index);
 }
@@ -157,6 +166,7 @@ function closeCardView() {
 
     const CardViewRef = document.getElementById('overlay');
     CardViewRef.classList.toggle('d-flex');
+    document.body.classList.remove('no-scroll');
 }
 
 function stopBubbling(event) {
@@ -168,25 +178,40 @@ function stopBubbling(event) {
 // #region reiter für verschiedene descriptions
 
 function renderBaseStats(index) {
+
     const descRef = document.getElementById('desc' + index);
     const navBaseStatsRef = document.getElementById('nav-base-stats' + index);
     const navAboutRef = document.getElementById('nav-about' + index);
+
     navBaseStatsRef.classList.add("highlight");
     navAboutRef.classList.remove("highlight");
 
-    descRef.innerHTML = getBaseStats({ hp: pokeArray[index].stats.hp, attack: pokeArray[index].stats.attack, defense: pokeArray[index].stats.defense, specialAttack: pokeArray[index].stats.special_attack, specialDefense: pokeArray[index].stats.special_defense, speed: pokeArray[index].stats.speed })
+    descRef.innerHTML = getBaseStats({
+        hp: pokeArray[index].stats.hp,
+        attack: pokeArray[index].stats.attack,
+        defense: pokeArray[index].stats.defense,
+        specialAttack: pokeArray[index].stats.special_attack,
+        specialDefense: pokeArray[index].stats.special_defense,
+        speed: pokeArray[index].stats.speed
+    })
 }
 
 function renderAbout(index) {
+
     const descRef = document.getElementById('desc' + index);
-
     const navBaseStatsRef = document.getElementById('nav-base-stats' + index);
-    navBaseStatsRef.classList.remove("highlight");
-
     const navAboutRef = document.getElementById('nav-about' + index);
+
+    navBaseStatsRef.classList.remove("highlight");
     navAboutRef.classList.add("highlight");
 
-    descRef.innerHTML = getAbout({ abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight })
+    descRef.innerHTML = getAbout({ 
+        abilitieOne: pokeArray[index].abilities[0], 
+        abilitieTwo: pokeArray[index].abilities[1], 
+        height: pokeArray[index].height, 
+        index: index,
+        weight: pokeArray[index].weight 
+    })
 }
 
 // #endregion
@@ -224,22 +249,35 @@ function backward(index) {
 
 // searchbar programmieren
 
-function search(){
+// TODO: searchbar optimieren ( groß/kleinschreibun, erst ab 3 Buchstaben aktivieren)
+
+function search() {
 
     const inputRef = document.getElementById('search-bar');
     const inputValue = inputRef.value;
 
-    const result = pokeArray.filter(pokemon => pokemon.name.includes(inputValue))
+    if (inputValue.length >= 3) {
+        const result = pokeArray.filter(pokemon => pokemon.name.includes(inputValue))
 
-
-
-    for (let i = 0; i <= result.length; i++){
-
+        renderCardSection(result);
+    } else {
+        renderCardSection(pokeArray);
     }
+
 }
 
 
 // load-overlay erstellen
+
+function showLoadingSpinner() {
+    const loadingRef = document.getElementById('loading-spinner');
+    loadingRef.classList.add('d-flex');
+}
+
+function endLoadingSpinner() {
+    const loadingRef = document.getElementById('loading-spinner');
+    loadingRef.classList.remove('d-flex');
+}
 
 
 
