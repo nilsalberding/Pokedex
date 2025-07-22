@@ -58,7 +58,7 @@ function getCardView({typeOne, name, id, spriteSrc, index, height, weight, abili
             </div>
 
             <div class="cardview-buttons">
-                <button>previous</button>
+                <button onclick="backward(${index} - 1)">previous</button>
                 <button onclick="forward(${index} + 1)">next</button>
             </div>
         </div>

@@ -205,6 +205,19 @@ async function forward(index) {
     renderTypesCardView(index);
 }
 
+function backward(index) {
+
+    if (index + 1 == 0) {
+
+    } else {
+        const CardViewRef = document.getElementById('overlay');
+
+        CardViewRef.innerHTML = getCardView({ typeOne: pokeArray[index].types[0], name: pokeArray[index].name, id: pokeArray[index].id, spriteSrc: pokeArray[index].spriteSrcScnd, abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight });
+
+        renderTypesCardView(index);
+    }
+}
+
 
 
 
