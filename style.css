@@ -4,6 +4,7 @@ header {
     background-color: #ffcb05;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 main {

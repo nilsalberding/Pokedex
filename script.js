@@ -100,6 +100,8 @@ async function getPokemonFromApi() {
     renderCards();
 }
 
+
+
 function renderCards() {
 
     const cardSectionRef = document.getElementById('cards');
@@ -189,7 +191,7 @@ function renderAbout(index) {
 
 // #endregion
 
-// pfeile um zum nächsten pokemon zu kommen
+// #region pfeile um zum nächsten pokemon zu kommen
 
 async function forward(index) {
 
@@ -218,10 +220,24 @@ function backward(index) {
     }
 }
 
-
-
+// #endregion
 
 // searchbar programmieren
+
+function search(){
+
+    const inputRef = document.getElementById('search-bar');
+    const inputValue = inputRef.value;
+
+    const result = pokeArray.filter(pokemon => pokemon.name.includes(inputValue))
+
+
+
+    for (let i = 0; i <= result.length; i++){
+
+    }
+}
+
 
 // load-overlay erstellen
 
