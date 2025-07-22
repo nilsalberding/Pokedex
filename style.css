@@ -63,6 +63,7 @@ main {
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
+            transition: 0.3s;
 
             img {
                 height: 10rem;
@@ -84,6 +85,10 @@ main {
 
 
             }
+        }
+        .card:hover{
+            box-shadow: rgba(99, 99, 99, 0.8) 0px 4px 8px 0px;
+
         }
     }
 }
@@ -146,6 +151,7 @@ main {
                     text-align: center;
                     background-color: #ffcb05;
                     padding: 0.8rem;
+                    cursor: pointer;
                 }
 
                 span:hover {
@@ -179,6 +185,24 @@ main {
                     }
                 }
             }
+        }
+        .cardview-buttons {
+            padding: 1.6rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        button {
+            width: 10rem;
+            border: none;
+            background-color: #ffcb05;
+            padding: 0.4rem 0;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: #ffea9b;
         }
     }
 }

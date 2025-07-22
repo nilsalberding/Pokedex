@@ -127,12 +127,9 @@ function renderTypes(index) {
 
 getPokemonFromApi();
 
-
 console.log(pokeArray);
 
-
-
-// overlay-ansicht erstellen
+// #region overlay-ansicht erstellen
 
 function showCardView(index) {
 
@@ -151,7 +148,6 @@ function renderTypesCardView(index) {
         const typeRef = document.getElementById('cardview-type' + index);
 
         typeRef.innerHTML += getTypes(pokeArray[index].types[j]);
-
     }
 }
 
@@ -164,6 +160,30 @@ function closeCardView() {
 function stopBubbling(event){
     event.stopPropagation();
 }
+
+function renderBaseStats(index){
+    const descRef = document.getElementById('desc' + index);
+    const navBaseStatsRef = document.getElementById('nav-base-stats' + index);
+    const navAboutRef = document.getElementById('nav-about' + index);
+    navBaseStatsRef.classList.add("highlight");
+    navAboutRef.classList.remove("highlight");
+
+    descRef.innerHTML = getBaseStats({hp: pokeArray[index].stats.hp, attack: pokeArray[index].stats.attack, defense: pokeArray[index].stats.defense, specialAttack: pokeArray[index].stats.special_attack, specialDefense: pokeArray[index].stats.special_defense, speed: pokeArray[index].stats.speed})
+}
+
+function renderAbout(index){
+    const descRef = document.getElementById('desc' + index);
+
+    const navBaseStatsRef = document.getElementById('nav-base-stats' + index);
+    navBaseStatsRef.classList.remove("highlight");
+
+    const navAboutRef = document.getElementById('nav-about' + index);    
+    navAboutRef.classList.add("highlight");
+
+    descRef.innerHTML = getAbout({abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight})
+}
+
+// #endregion
 
 
 // reiter für verschiedene descriptions
