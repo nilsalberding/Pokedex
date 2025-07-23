@@ -1,8 +1,8 @@
 class Pokemon {
-
     // #region attributes
 
     name;
+    nameLowerCase;
     spriteSrc;
     spriteSrcScnd;
     id;
@@ -23,11 +23,11 @@ class Pokemon {
     // #endregion
 
     constructor({ pName, pSpriteSrc, pSpriteSrcScnd, pIndex, pTypes, pStats, pAbilities, pWeight, pHeight }) {
-
         this.spriteSrc = pSpriteSrc;
         this.spriteSrcScnd = pSpriteSrcScnd;
         this.id = pIndex;
         this.weight = pWeight;
+        this.nameLowerCase = pName;
 
         this.getAbilities(pAbilities);
         this.getStats(pStats);
@@ -40,7 +40,6 @@ class Pokemon {
     // #region methods
 
     getStats(pokeStats) {
-
         this.stats.hp = pokeStats[0].base_stat;
         this.stats.attack = pokeStats[1].base_stat;
         this.stats.defense = pokeStats[2].base_stat;
@@ -79,37 +78,41 @@ class Pokemon {
 const pokeArray = [];
 
 async function getPokemonFromApi() {
-
     const arrayLength = pokeArray.length + 1;// angelegt für den loadmore button
 
     showLoadingSpinner();
 
     for (let i = arrayLength; i <= arrayLength + 24; i++) {        // 
-        if (i <= 151){
-        const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
-        const pokeJson = await pokeResponse.json();
+        if (i <= 151) {
+            const pokeResponse = await fetch('https://pokeapi.co/api/v2/pokemon/' + i);
+            const pokeJson = await pokeResponse.json();
 
-        pokeArray.push(new Pokemon({ pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson['sprites']['front_default'], pSpriteSrcScnd: pokeJson['sprites']['other']['official-artwork']['front_default'], pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight }));
-    }}
+            pokeArray.push(new Pokemon({ pAbilities: pokeJson.abilities, pName: pokeJson.name, pHeight: pokeJson.height, pIndex: i, pSpriteSrc: pokeJson['sprites']['front_default'], pSpriteSrcScnd: pokeJson['sprites']['other']['official-artwork']['front_default'], pStats: pokeJson.stats, pTypes: pokeJson.types, pWeight: pokeJson.weight }));
+        }
+    }
     endLoadingSpinner();
     renderCardSection(pokeArray);
 }
 
 function renderCardSection(array) {
-
     const cardSectionRef = document.getElementById('cards');
     cardSectionRef.innerHTML = "";
 
     for (let i = 0; i < array.length; i++) {
 
-        cardSectionRef.innerHTML += getCard({ spriteSrc: array[i].spriteSrc, id: array[i].id, name: array[i].name, index: i });
+        cardSectionRef.innerHTML += getCard({
+            spriteSrc: array[i].spriteSrc,
+            id: array[i].id,
+            name: array[i].name,
+            index: i,
+            type: array[i].types[0]
+        });
 
         renderTypes(i, array);
     }
 }
 
 function renderTypes(index, array) {
-
     for (let j = 0; j < array[index].types.length; j++) {
 
         const typeRef = document.getElementById('types' + index);
@@ -120,32 +123,35 @@ function renderTypes(index, array) {
 
 getPokemonFromApi();
 
-console.log(pokeArray);
-
 // #region overlay-ansicht erstellen
 
 function showCardView(index) {
-
     const CardViewRef = document.getElementById('overlay');
     CardViewRef.classList.toggle('d-flex');
     document.body.classList.add('no-scroll');
 
-    CardViewRef.innerHTML = getCardView({ 
-        typeOne: pokeArray[index].types[0], 
-        name: pokeArray[index].name, 
-        id: pokeArray[index].id, 
-        spriteSrc: pokeArray[index].spriteSrcScnd, 
-        abilitieOne: pokeArray[index].abilities[0], 
-        abilitieTwo: pokeArray[index].abilities[1], 
-        height: pokeArray[index].height, 
-        index: index, 
-        weight: pokeArray[index].weight });
-
+    renderCardView(index);
     renderTypesCardView(index);
 }
 
-function renderTypesCardView(index) {
+function renderCardView(index) {
+    const CardViewRef = document.getElementById('overlay');
 
+    CardViewRef.innerHTML = getCardView({
+        typeOne: pokeArray[index].types[0],
+        name: pokeArray[index].name,
+        id: pokeArray[index].id,
+        spriteSrc: pokeArray[index].spriteSrcScnd,
+        abilitieOne: pokeArray[index].abilities[0],
+        abilitieTwo: pokeArray[index].abilities[1],
+        height: pokeArray[index].height,
+        index: index,
+        weight: pokeArray[index].weight
+    });
+
+}
+
+function renderTypesCardView(index) {
     for (let j = 0; j < pokeArray[index].types.length; j++) {
 
         const typeRef = document.getElementById('cardview-type' + index);
@@ -155,7 +161,6 @@ function renderTypesCardView(index) {
 }
 
 function closeCardView() {
-
     const CardViewRef = document.getElementById('overlay');
     CardViewRef.classList.toggle('d-flex');
     document.body.classList.remove('no-scroll');
@@ -170,7 +175,6 @@ function stopBubbling(event) {
 // #region reiter für verschiedene descriptions
 
 function renderBaseStats(index) {
-
     const descRef = document.getElementById('desc' + index);
     const navBaseStatsRef = document.getElementById('nav-base-stats' + index);
     const navAboutRef = document.getElementById('nav-about' + index);
@@ -189,7 +193,6 @@ function renderBaseStats(index) {
 }
 
 function renderAbout(index) {
-
     const descRef = document.getElementById('desc' + index);
     const navBaseStatsRef = document.getElementById('nav-base-stats' + index);
     const navAboutRef = document.getElementById('nav-about' + index);
@@ -197,12 +200,12 @@ function renderAbout(index) {
     navBaseStatsRef.classList.remove("highlight");
     navAboutRef.classList.add("highlight");
 
-    descRef.innerHTML = getAbout({ 
-        abilitieOne: pokeArray[index].abilities[0], 
-        abilitieTwo: pokeArray[index].abilities[1], 
-        height: pokeArray[index].height, 
+    descRef.innerHTML = getAbout({
+        abilitieOne: pokeArray[index].abilities[0],
+        abilitieTwo: pokeArray[index].abilities[1],
+        height: pokeArray[index].height,
         index: index,
-        weight: pokeArray[index].weight 
+        weight: pokeArray[index].weight
     })
 }
 
@@ -211,28 +214,24 @@ function renderAbout(index) {
 // #region pfeile um zum nächsten pokemon zu kommen
 
 async function forward(index) {
-
     if (index == pokeArray.length) {
-
         await getPokemonFromApi();
     }
 
-    const CardViewRef = document.getElementById('overlay');
-
-    CardViewRef.innerHTML = getCardView({ typeOne: pokeArray[index].types[0], name: pokeArray[index].name, id: pokeArray[index].id, spriteSrc: pokeArray[index].spriteSrcScnd, abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight });
-
+    renderCardView(index);
     renderTypesCardView(index);
 }
 
 function backward(index) {
-
     if (index + 1 == 0) {
 
+        const newIndex = pokeArray.length - 1;
+        renderCardView(newIndex);
+        renderTypesCardView(newIndex);
+
     } else {
-        const CardViewRef = document.getElementById('overlay');
 
-        CardViewRef.innerHTML = getCardView({ typeOne: pokeArray[index].types[0], name: pokeArray[index].name, id: pokeArray[index].id, spriteSrc: pokeArray[index].spriteSrcScnd, abilitieOne: pokeArray[index].abilities[0], abilitieTwo: pokeArray[index].abilities[1], height: pokeArray[index].height, index: index, weight: pokeArray[index].weight });
-
+        renderCardView(index);
         renderTypesCardView(index);
     }
 }
@@ -242,15 +241,14 @@ function backward(index) {
 // searchbar programmieren
 
 function search() {
-
     const inputRef = document.getElementById('search-bar');
-    const inputValue = inputRef.value;
+    const inputValue = inputRef.value.toLowerCase();
 
     if (inputValue.length >= 3) {
-        const result = pokeArray.filter(pokemon => pokemon.name.includes(inputValue))
+        const result = pokeArray.filter(pokemon => pokemon.nameLowerCase.includes(inputValue))
 
         renderCardSection(result);
-    } else {
+    } if (inputValue == "") {
         renderCardSection(pokeArray);
     }
 }
