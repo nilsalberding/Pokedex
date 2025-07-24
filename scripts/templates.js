@@ -57,10 +57,10 @@ function getCardView({typeOne, name, id, spriteSrc, index, height, weight, abili
                 </div>
             </div>
 
-            <div class="cardview-buttons">
-                <button onclick="backward(${index} - 1)">previous</button>
-                <button onclick="forward(${index} + 1)">next</button>
-            </div>
+            <!-- <div class="cardview-buttons"> -->
+                <button class="btn-prev" onclick="backward(${index} - 1)">previous</button>
+                <button class="btn-nxt" onclick="forward(${index} + 1)">next</button>
+            <!-- </div> -->
         </div>
     `
 }
@@ -87,35 +87,5 @@ function getAbout({height, weight, abilitieOne, abilitieTwo}){
     `
 }
 
-function getBaseStats({hp,attack, defense, specialAttack, specialDefense, speed}){
-    
-    return /*html*/`
-        <table>
-            <tr>
-                <td>hp:</td>
-                <td>${hp}</td>
-            </tr>
-            <tr>
-                <td>attack:</td>
-                <td>${attack}</td>
-            </tr>
-            <tr>
-                <td>defense:</td>
-                <td>${defense}</td>
-            </tr>
-            <tr>
-                <td>sp. attack:</td>
-                <td>${specialAttack}</td>
-            </tr>
-            <tr>
-                <td>sp. defense:</td>
-                <td>${specialDefense}</td>
-            </tr>
-            <tr>
-                <td>speed:</td>
-                <td>${speed}</td>
-            </tr>
-        </table>
-    `
-}
+
 

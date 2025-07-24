@@ -13,11 +13,15 @@
     <link rel="stylesheet" href="./assets/fonts/font-gb.css">
     <link rel="stylesheet" href="./styles/loading-spinner.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./scripts/templates.js"></script>
+    <script src="./scripts/stats_chart.js"></script>
+    
+    
 
 </head>
 
-<body>
+<body onload="getPokemonFromApi()">
     <div id="overlay" class="d-none" onclick="closeCardView()">
     </div>
     

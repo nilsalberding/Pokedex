@@ -135,6 +135,7 @@ main {
     .cardview {
         background-color: white;
         width: 28rem;
+        height: 60rem;
         border-radius: 15px;
 
         .cardview-main {
@@ -210,12 +211,18 @@ main {
             }
         }
 
-        .cardview-buttons {
-            padding: 1.6rem;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
+
+            .btn-prev{
+                position: absolute;
+                bottom: 1.6rem;
+                left: 2rem;
+            }
+            .btn-nxt{
+                position: absolute;
+                bottom: 1.6rem;
+                right: 2rem;
+            }
+        
     }
 }
 
